@@ -10,15 +10,38 @@ if (!$query) {
 
 $web = "https://tv6.lk21official.my";
 $url = $web . "/search.php?s=" . urlencode($query);
-$options = [
-    "http" => [
-        "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36\r\n"
-    ]
-];
-$html = file_get_html($url, false, stream_context_create($options));
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36");
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+    "Accept-Language: en-US,en;q=0.9",
+    "Referer: $web",
+]);
 
+$htmlContent = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+if ($httpCode !== 200 || !$htmlContent) {
+    echo json_encode([
+        "status" => "404",
+        "author" => "abdiputranar",
+        "message" => "Halaman tidak ditemukan"
+    ], JSON_PRETTY_PRINT);
+    exit;
+}
+
+$html = str_get_html($htmlContent);
 if (!$html) {
-    echo json_encode(["status" => "404", "author" => "abdiputranar", "message" => "Halaman tidak ditemukan"], JSON_PRETTY_PRINT);
+    echo json_encode([
+        "status" => "404",
+        "author" => "abdiputranar",
+        "message" => "Halaman tidak valid"
+    ], JSON_PRETTY_PRINT);
     exit;
 }
 
