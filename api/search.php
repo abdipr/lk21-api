@@ -49,14 +49,19 @@ $films = [];
 foreach ($html->find("div.search-item") as $item) {
     $titleElement = $item->find("h3 a", 0);
     $imageElement = $item->find("figure a img", 1);
-    $director = $item->find("p", 0)->plaintext;
-    $stars = $item->find("p", 1)->plaintext;
+    $directorElement = $item->find("p", 0);
+    $starsElement = $item->find("p", 1);
+    $director = $directorElement ? trim(str_replace("Sutradara:", "", $directorElement->plaintext)) : '';
+    $stars = $starsElement ? trim(str_replace("Bintang:", "", $starsElement->plaintext)) : '';
+  if (empty($director) || empty($stars)) {
+        continue;
+    }
     $films[] = [
         "id" => str_replace("/", "", $titleElement->href),
         "judul" => $titleElement->plaintext,
         "image" => $web . ($imageElement->src ?? "/wp-content/themes/dunia21/images/default-lk21.jpg"),
-        "sutradara" => trim(str_replace("Sutradara:", "", $director)),
-        "pemeran" => trim(str_replace("Bintang:", "", $stars)),
+        "sutradara" => $director,
+        "pemeran" => $stars,
         "link" => $web . $titleElement->href
     ];
 }
