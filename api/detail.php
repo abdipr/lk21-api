@@ -79,7 +79,7 @@ $soundtrack = trim($matches[4] ?? '');
 $soundtrack = preg_replace('/^(.*?\)).*$/s', '$1', $soundtrack);
 
 $trailer = $html->find('div.action-player ul li a', 2)->href;
-$iframe = $html->find('div#loadPlayer iframe#player-iframe', 0)->src;
+$iframe = $html->find('ul#loadProviders li', -1)->find('a', 0)->href;
 $iframe = str_replace("https://playeriframe.lol/iframe.php?url=", "", $iframe);
 $iframe = urldecode($iframe);
 
