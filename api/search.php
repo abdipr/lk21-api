@@ -58,7 +58,7 @@ foreach ($html->find("div.search-item") as $item) {
     $films[] = [
         "id" => str_replace("/", "", $titleElement->href),
         "judul" => $titleElement->plaintext,
-        "image" => $web . ($imageElement->src ?? "/wp-content/themes/dunia21/images/default-lk21.jpg"),
+        "image" => "https://s0.lk21static.buzz" . ($imageElement->src ?? "/wp-content/themes/dunia21/images/default-lk21.jpg"),
         "sutradara" => $director,
         "pemeran" => $stars,
         "link" => $web . $titleElement->href
