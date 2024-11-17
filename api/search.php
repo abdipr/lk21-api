@@ -1,14 +1,13 @@
 <?php
 header("Content-Type: application/json");
-require "simple_html_dom.php";
+require "../simple_html_dom.php";
+require "var.php";
 
 $query = $_GET['q'] ?? '';
 if (!$query) {
     echo json_encode(["status" => "404", "author" => "abdiputranar", "message" => "Parameter 'q' diperlukan, contoh: ?q=The Greatest Showman"], JSON_PRETTY_PRINT);
     exit;
 }
-
-$web = "https://tv6.lk21official.my";
 $url = $web . "/search.php?s=" . urlencode($query);
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
