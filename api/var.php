@@ -1,1 +1,1 @@
-<?php $web = "https://tv.lk21official.pics"; ?>
+<?php $web = "https://tv6.lk21official.my"; ?>
