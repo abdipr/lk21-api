@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: application/json");
-require "../simple_html_dom.php";
+require "simple_html_dom.php";
 require "var.php";
 
 $query = $_GET['q'] ?? '';
