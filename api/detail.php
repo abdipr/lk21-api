@@ -23,6 +23,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, [
     "Accept-Language: en-US,en;q=0.9",
     "Referer: $web",
 ]);
+
 $htmlContent = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
